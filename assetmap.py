@@ -28,7 +28,7 @@ def make_forms(gm=None):
     for formlist in forms_dict.values():
         for form in formlist:
             if 'assetBundleValue' in form:
-                forms[form['form']] = form['assetBundleValue']
+                forms[form['form']] = '{:02d}'.format(form['assetBundleValue'])
             elif 'assetBundleSuffix' in form:
                 forms[form['form']] = form['assetBundleSuffix']
             else:
@@ -40,10 +40,8 @@ def form2asset(enum, forms):
     if enum in forms:
         return forms[enum]
     else:
-        return 0
+        return '00'
 
-def id2form(form_id):
-    return form2enum[form_id]
 
 def make_full_map():
     forms = make_forms()
