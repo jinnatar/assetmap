@@ -15,8 +15,6 @@ echo 'form2enum = {' > "$GENDIR/$OUTFILE"
 egrep '^\s+[0-9]+:' Enums-Form.pb.swift | less | sed 's/\.same(proto: //;s/)//' >> "$GENDIR/$OUTFILE"
 echo '}' >> "$GENDIR/$OUTFILE"
 
-echo "$GENDIR"
-
 python3 "$GENDIR/assetmap.py" --game_master="$TMPDIR/GAME_MASTER.json"
 
 rm -r "$TMPDIR"
