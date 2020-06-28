@@ -9,8 +9,8 @@ OUTDIR="$PWD"
 TMPDIR=$(mktemp -d)
 cd "$TMPDIR"
 
-wget "$ENUM_SOURCE"
-wget "$GM_SOURCE"
+wget -q "$ENUM_SOURCE"
+wget -q "$GM_SOURCE"
 
 echo 'form2enum = {' > "$GENDIR/$OUTFILE"
 egrep '^\s+[0-9]+:' Enums-Form.pb.swift | less | sed 's/\.same(proto: //;s/)//' >> "$GENDIR/$OUTFILE"
