@@ -16,7 +16,7 @@ def make_forms(gm=None):
             gm = json.load(f)
 
     # move from the list format of the gm to a simple dict
-    master_dict = {item['templateId']:item for item in gm['itemTemplates']}
+    master_dict = {item['templateId']:item for item in gm['itemTemplate']}
     # Drop useless levels and items
     forms_dict = {item[1]['formSettings']['pokemon']:item[1]['formSettings']['forms']
             for item in master_dict.items()
