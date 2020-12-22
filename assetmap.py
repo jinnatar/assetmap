@@ -8,7 +8,15 @@ from form2enum import form2enum
 
 FLAGS = flags.FLAGS
 
-flags.DEFINE_string('game_master', 'GAME_MASTER.json', 'path to GAME_MASTER.json')
+flags.DEFINE_string('game_master', 'V2_GAME_MASTER.json', 'path to V2_GAME_MASTER.json')
+
+def is_form(item):
+    if 'formSettings' in item[1]['data'] and 'forms' in item[1]['data']['formSettings']:
+        return True
+    else:
+        return False
+
+
 
 def make_forms(gm=None):
     if gm == None:
@@ -16,13 +24,10 @@ def make_forms(gm=None):
             gm = json.load(f)
 
     # move from the list format of the gm to a simple dict
-    master_dict = {item['templateId']:item for item in gm['itemTemplate']}
+    master_dict = {item['templateId']:item for item in gm['template']}
     # Drop useless levels and items
-    forms_dict = {item[1]['formSettings']['pokemon']:item[1]['formSettings']['forms']
-            for item in master_dict.items()
-            if 'formSettings' in item[1]
-            and 'forms' in item[1]['formSettings']}
-
+    forms_dict = {item[1]['data']['formSettings']['pokemon']:item[1]['data']['formSettings']['forms']
+            for item in master_dict.items() if is_form(item)}
     forms = {}
     # Simplify structure to just form:asset_id pairs
     for formlist in forms_dict.values():
