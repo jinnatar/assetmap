@@ -53,10 +53,18 @@ def make_full_map():
     full_map = {}
     for form_id, form in form2enum.items():
         asset_id = form2asset(form, forms)
-        logging.debug('{}:{}'.format(form_id, asset_id))
-        full_map[form_id] = asset_id
+        asset_name = formname(form)
+        logging.debug('{}:{} ({})'.format(form_id, asset_id, asset_name))
+        full_map[form_id] = {
+                'asset_id': asset_id,
+                'asset_name': asset_name
+                }
     print(json.dumps(full_map, indent=2, sort_keys=True))
 
+def formname(enum):
+    form = enum.split('_', 1)[1] # prune name from front
+    form = form.replace('_', ' ') # replace further breaks with spaces
+    return form.capitalize()
 
 def main(argv):
     del argv
